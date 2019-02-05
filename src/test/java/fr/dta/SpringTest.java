@@ -1,33 +1,46 @@
 package fr.dta;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import fr.dta.modele.Employee;
-import fr.dta.repository.EmployeeMockRepository;
+import fr.dta.repository.EmployeeRepository;
 import fr.dta.service.CompagnyService;
-import fr.dta.service.EmployeeMockService;
+import fr.dta.service.EmployeeService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = App.class)
+@TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
 public class SpringTest {
-	
+
+	@Autowired
+	EmployeeRepository employeeMockRepository;
+
+	@Autowired
+	EmployeeService employeeMockService;
+
+	@Autowired
+	CompagnyService compagnyService;
+
 	@Test
 	public void testSpringTest() {
-		AbstractApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		EmployeeMockRepository test = (EmployeeMockRepository) context.getBean("employeeMockRepository");
-		assertNotNull(test);
-		
-		EmployeeMockService test1 = (EmployeeMockService) context.getBean("employeeMockService");
-		Employee e1 = test1.findLastHired();
+		assertNotNull(employeeMockRepository);
+
+		Employee e1 = employeeMockService.findLastHired();
 		assertEquals(e1.getId(), new Long(542));
-		
-		CompagnyService test2 = (CompagnyService) context.getBean("compagnyService");
-		List<Employee> list = test2.findEmployees();
-		assertNotNull(test2);
-		
+
+		List<Employee> list = compagnyService.findEmployees();
+		assertNotNull(compagnyService);
+
 	}
 }

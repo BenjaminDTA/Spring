@@ -9,38 +9,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.dta.modele.Employee;
 import fr.dta.repository.EmployeeRepository;
-
 @Transactional
 @Service
-public class EmployeeMockService implements EmployeeService {
+public class EmployeeJpaService implements EmployeeService {
 
 	@Autowired
-	private EmployeeRepository employeeMockRepository;
+	private EmployeeRepository employeeJpaRepository;
 
+	@Override
 	public void saveEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-
+		employeeJpaRepository.saveEmployee(employee);;
 	}
 
+	@Override
 	public List<Employee> findAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+		return employeeJpaRepository.findAllEmployees();
 	}
 
+	@Override
 	public Employee findBySsn(String ssn) {
-		// TODO Auto-generated method stub
-		return null;
+		return employeeJpaRepository.findBySsn(ssn);
 	}
 
+	@Override
 	public void updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		employeeJpaRepository.updateEmployee(employee);
 
 	}
 
+	@Override
 	public Employee findLastHired() {
-		return employeeMockRepository.findAllEmployees().stream().max(Comparator.comparing(Employee::getDateEmbauche))
+		return employeeJpaRepository.findAllEmployees().stream().max(Comparator.comparing(Employee::getDateEmbauche))
 				.get();
-
 	}
 
 }

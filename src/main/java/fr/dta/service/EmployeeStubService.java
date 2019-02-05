@@ -2,18 +2,24 @@ package fr.dta.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.dta.modele.Employee;
+import fr.dta.repository.EmployeeRepository;
+
 @Transactional
 @Service
 public class EmployeeStubService implements EmployeeService {
-	
+
+	@Autowired
+	private EmployeeRepository employeeMockRepository;
+
 	@Override
 	public void saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -31,7 +37,7 @@ public class EmployeeStubService implements EmployeeService {
 	@Override
 	public void updateEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -39,6 +45,5 @@ public class EmployeeStubService implements EmployeeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 }
